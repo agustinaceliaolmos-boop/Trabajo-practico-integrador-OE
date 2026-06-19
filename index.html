@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body { font-family: Arial; padding:20px }
+    table { border-collapse: collapse; width: 100%; margin-top:10px; }
+    th, td { border:1px solid #ccc; padding:6px; text-align:center; }
+    button { margin:5px; }
+  </style>
+</head>
+
+<body>
+  <h2>👋 Bienvenido al software de RRHH</h2>
+
+  <label>Seleccioná tu nombre:</label><br>
+  <select id="colaborador" onchange="cargarDatos()"></select>
+
+  <p>
+    <button onclick="alta()">➕ Dar de alta nuevo colaborador</button>
+  </p>
+
+  <hr>
+
+  <div id="panel" style="display:none">
+    <h3>⏱ Registro de jornada</h3>
+    <button onclick="entrada()">Registrar entrada</button>
+    <button onclick="salida()">Registrar salida</button>
+
+    <h3>📊 Registros</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Entrada</th>
+          <th>Salida</th>
+          <th>Horas</th>
+          <th>País</th>
+          <th>Tareas</th>
+        </tr>
+      </thead>
+      <tbody id="tabla"></tbody>
+    </table>
+  </div>
+
+<script>
+/* ===============================
+   CARGA DE COLABORADORES
+================================ */
+function cargarColaboradores() {
+  google.script.run
+    .withSuccessHandler(lista => {
+      const sel = document.getElementById("colaborador");
+      sel.innerHTML = "<option value=''>-- seleccionar --</option>";
+
+      lista.forEach(n => {
+        sel.innerHTML += `<option value="${n}">${n}</option>`;
+      });
+    })
+    .withFailureHandler(err => {
+      alert("❌ Error al cargar colaboradores");
+      console.error(err);
+    })
+    .obtenerColaboradores();
+}
+
+/* ===============================
+   CARGA DE REGISTROS
+================================ */
+function cargarDatos() {
+  const nombre = document.getElementById("colaborador").value;
+  if (!nombre) {
+    document.getElementById("panel").style.display = "none";
+    return;
+  }
+
+  document.getElementById("panel").style.display = "block";
+
+  google.script.run
+    .withSuccessHandler(datos => {
+      const tbody = document.getElementById("tabla");
+      tbody.innerHTML = "";
+
+      datos.forEach(r => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${r[0]}</td>
+            <td>${r[1]}</td>
+            <td>${r[2]}</td>
+            <td>${r[3]}</td>
+            <td>${r[4]}</td>
+            <td>${r[5]}</td>
+          </tr>`;
+      });
+    })
+    .withFailureHandler(err => {
+      alert("❌ Error al cargar registros");
+      console.error(err);
+    })
+    .obtenerRegistros(nombre);
+}
+
+/* ===============================
+   REGISTRAR ENTRADA
+================================ */
+function entrada() {
+  const nombre = document.getElementById("colaborador").value;
+
+  if (!nombre) {
+    alert("⚠️ Debe seleccionar un colaborador");
+    return;
+  }
+
+  google.script.run
+    .withSuccessHandler(msg => {
+      if (msg) alert(msg);
+      cargarDatos();
+    })
+    .withFailureHandler(err => {
+      alert("❌ Error al registrar entrada");
+      console.error(err);
+    })
+    .registrarEntradaWeb(nombre);
+}
+
+/* ===============================
+   REGISTRAR SALIDA
+================================ */
+function salida() {
+  const nombre = document.getElementById("colaborador").value;
+
+  if (!nombre) {
+    alert("⚠️ Debe seleccionar un colaborador");
+    return;
+  }
+
+  const pais = prompt("País donde trabajaste hoy");
+  const tareas = prompt("Tareas realizadas");
+
+  if (!pais || !tareas) {
+    alert("⚠️ Debe completar país y tareas");
+    return;
+  }
+
+  google.script.run
+    .withSuccessHandler(msg => {
+      if (msg) alert(msg);
+      cargarDatos();
+    })
+    .withFailureHandler(err => {
+      alert("❌ No se puede registrar salida sin entrada previa");
+      console.error(err);
+    })
+    .registrarSalidaWeb(nombre, pais, tareas);
+}
+
+/* ===============================
+   ALTA DE COLABORADOR
+================================ */
+function alta() {
+  const nombre = prompt("Nombre del colaborador");
+  const pais = prompt("País de trabajo");
+
+  if (!nombre || !pais) {
+    alert("⚠️ Nombre y país son obligatorios");
+    return;
+  }
+
+  google.script.run
+    .withSuccessHandler(msg => {
+      if (msg) alert(msg);
+      cargarColaboradores();
+    })
+    .withFailureHandler(err => {
+      alert("❌ Error al dar de alta colaborador");
+      console.error(err);
+    })
+    .altaColaboradorWeb(nombre, pais);
+}
+
+window.onload = cargarColaboradores;
+</script>
+
+</body>
+</html>
