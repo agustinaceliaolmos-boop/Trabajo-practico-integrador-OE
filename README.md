@@ -17,12 +17,14 @@ para registrar la jornada laboral de colaboradores.
 - GitHub
 
 ## Despliegue
-1. Subir google drive el archivo xlsx, o bien crear uno.
-2. Abrir en la hoja de calculo el menu de extensiones> vinculacion con apps cript
+1. Crear una hoja de calculo en drive.
+2. Abrir en la hoja de calculo el menu de extensiones> vinculacion con apps script
 3. Copiar los archivos Code.gs e index.html
 4. Dar los permisos que solicite
 5. Implementar como Web App
 
-#Acceso a la app funcional:https://script.google.com/a/macros/mi.unc.edu.ar/s/AKfycbzxhQxIT0Fp5GnviwESnmgzwMtTjp1PdXknaDhj9jy8-zwhsbZ5v6DaA478eQJpYkVY2Q/exec
-#Acceso a mi codigo: https://script.google.com/u/0/home/projects/1MxI3Z9frmus0OY3RpkzbOxM0PjUam7u3Sg_lCKTMJAFaYpqPm8sx84zo/edit
-#Acceso a la base de datos: https://docs.google.com/spreadsheets/d/1aS-2-HZDALluKs6wZulE5P7upX2Va0KhjCU6xgGfYAc/edit?gid=0#gid=0
+#Acceso a la app ejemplo:https://script.google.com/a/macros/mi.unc.edu.ar/s/AKfycbzpKJhzCY-Uizf4nkktLAr9qNSJjHAc55_IgQk6FldZh8E4nBuTRAJMyOhL23EL9T_K/exec
+
+#Acceso al codigo ejemplo:https://script.google.com/home/projects/1tuj16pwNOqIX_HznSUXnnWqDqmAskP1lLsK-0L8dVWjUkBMYYMMXpyHP/edit
+
+#Acceso a la base de datos ejemplo:https://docs.google.com/spreadsheets/d/1a4I_E9K668qco0AIZEF5YWTFQ9FFGSTJ-tTfehcjEco/edit?gid=943928609#gid=943928609 
